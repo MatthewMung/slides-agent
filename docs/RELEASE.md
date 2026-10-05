@@ -9,6 +9,7 @@ Validation on Windows / Node 24.12.0 / Chromium 153.0.8010.12:
 - 20 unit/integration tests passed.
 - 14 actual-extension/MCP browser checks passed at each emulated scale 1, 1.25 and 1.5.
 - Build, skill validation and dependency audit passed.
+- All four GitHub Actions jobs passed on fresh Windows runners, including source installation and packaging.
 
 These are isolated fixture tests. Google's production Slides editor, native animations/transitions, production image uploads/exports, Codex desktop installation and independent second-computer manual acceptance remain unverified. Follow docs/ACCEPTANCE.md before treating those capabilities as verified.
 

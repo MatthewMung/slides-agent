@@ -27,3 +27,7 @@ Browser fixture reports are generated under `artifacts/browser-smoke-*.json` and
 - Emulated device scale is not a manual Windows display-scale acceptance test.
 - Dependencies: `npm audit` reported **0 vulnerabilities** at this run.
 - No Google production-editor or independent-computer manual acceptance result is claimed.
+
+## Independent Windows CI
+
+[GitHub Actions run 37257968782](https://github.com/MatthewMung/slides-agent/actions/runs/37257968782) passed all four jobs on fresh Windows runners: unit/typecheck/packaging, and actual-extension fixture tests at scales 1, 1.25, 1.5. This verifies source installation and automated tests on separate Windows environments. It does not satisfy the signed-in Google Slides manual acceptance gate.
