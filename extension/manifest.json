@@ -1,0 +1,13 @@
+{
+  "manifest_version": 3,
+  "name": "Slides Agent (Experimental)",
+  "version": "0.1.0",
+  "description": "Connect a local MCP client to your selected Google Slides tab.",
+  "minimum_chrome_version": "125",
+  "permissions": ["debugger", "tabs", "storage", "downloads"],
+  "background": { "service_worker": "background.js", "type": "module" },
+  "action": { "default_popup": "popup.html", "default_title": "Slides Agent" },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; connect-src ws://127.0.0.1:*"
+  }
+}

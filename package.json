@@ -1,0 +1,36 @@
+{
+  "name": "slides-agent",
+  "version": "0.1.0",
+  "description": "Experimental local MCP and Chrome bridge for operating Google Slides",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=24" },
+  "scripts": {
+    "build": "tsc --noEmit && node scripts/build.mjs",
+    "check": "tsc --noEmit",
+    "test": "vitest run",
+    "test:browser": "node scripts/browser-smoke.mjs",
+    "setup": "node dist/src/cli.js setup",
+    "bridge": "node dist/src/cli.js bridge",
+    "mcp": "node dist/src/cli.js mcp",
+    "doctor": "node dist/src/cli.js doctor",
+    "package": "npm run build && node scripts/package.mjs"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/server": "2.3.0",
+    "ws": "^8.18.3",
+    "zod": "^4.1.0"
+  },
+  "devDependencies": {
+    "@modelcontextprotocol/client": "2.3.0",
+    "@types/chrome": "^0.1.0",
+    "@types/node": "^24.0.0",
+    "@types/ws": "^8.18.1",
+    "archiver": "^7.0.1",
+    "esbuild": "^0.28.2",
+    "playwright": "^1.56.0",
+    "typescript": "^5.9.0",
+    "vitest": "^5.0.3"
+  }
+}

@@ -1,0 +1,12 @@
+import { build } from 'esbuild';
+import { mkdir, copyFile, rm } from 'node:fs/promises';
+import { resolve, dirname } from 'node:path';
+const output = resolve('dist');
+if (dirname(output) !== resolve(process.cwd())) throw new Error('Build output must be directly inside the workspace.');
+await rm(output, { recursive: true, force: true });
+await build({ entryPoints: ['src/cli.ts', 'src/bridge.ts', 'src/client.ts', 'src/config.ts', 'src/mcp.ts', 'src/files.ts', 'src/protocol.ts'], outdir: 'dist/src', format: 'esm', platform: 'node', target: 'node24' });
+await mkdir('dist/extension', { recursive: true });
+await build({ entryPoints: ['extension/background.ts', 'extension/popup.ts'], outdir: 'dist/extension', bundle: true, format: 'esm', platform: 'browser', target: 'chrome125', sourcemap: false });
+for (const file of ['manifest.json', 'popup.html', 'popup.css']) await copyFile(`extension/${file}`, `dist/extension/${file}`);
+await copyFile('node_modules/zod/LICENSE', 'dist/extension/THIRD_PARTY_LICENSES.txt');
+console.log('Built MCP CLI and unpacked extension: dist/extension');

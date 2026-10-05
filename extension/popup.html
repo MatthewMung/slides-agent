@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="popup.css"><title>Slides Agent</title></head>
+<body>
+  <h1>Slides Agent</h1><span class="tag">Experimental · 實驗版本</span>
+  <p id="status" role="status">Checking connection…</p>
+  <form id="pair">
+    <label for="port">Local bridge port／本機連接埠</label>
+    <input id="port" type="number" min="1024" max="65535" value="32145" required>
+    <label for="token">Pairing token／配對憑證</label>
+    <input id="token" type="password" autocomplete="off" pattern="[a-f0-9]{64}" required>
+    <p class="hint">Run <code>npm run setup -- --show-token</code> locally. Keep this token private.</p>
+    <button type="submit">Connect／連接</button>
+  </form>
+  <button id="stop" class="stop">Stop control／立即停止操作</button>
+  <button id="disconnect" class="secondary">Disconnect／斷開連線</button>
+  <p class="hint">Only the selected Slides presentation is controlled. Chrome shows its debugger notice while attached. Screenshots and visible text are sent to your MCP client.</p>
+  <script type="module" src="popup.js"></script>
+</body></html>

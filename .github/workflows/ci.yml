@@ -1,0 +1,45 @@
+name: Verify
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  unit:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run check
+      - run: npm test
+      - run: npm run package
+      - uses: actions/upload-artifact@v4
+        with:
+          name: slides-agent-build
+          path: release/*
+  browser:
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        scale: ['1', '1.25', '1.5']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - run: npx playwright install chromium
+      - run: npm run test:browser
+        env:
+          SLIDES_AGENT_SCALE: ${{ matrix.scale }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: browser-validation-${{ matrix.scale }}
+          path: artifacts/*
