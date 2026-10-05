@@ -1,5 +1,5 @@
 import { beforeEach, afterEach, it, expect } from 'vitest';
-import { mkdtemp, rm, writeFile } from 'node:fs/promises';
+import { mkdtemp, rm, writeFile, readFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { validateImage, verifyDownloads } from '../src/files.js';
@@ -10,7 +10,8 @@ afterEach(async () => { await rm(directory, { recursive: true, force: true }); }
 it('validates image signatures and rejects renamed executable content', async () => {
   const valid = join(directory, 'image.png');
   await writeFile(valid, Buffer.from([137, 80, 78, 71, 13, 10, 26, 10, 1]));
-  expect(await validateImage(valid)).toBe(valid);
+  // Windows can resolve an 8.3 temporary directory name to its long form.
+  expect(await readFile(await validateImage(valid))).toEqual(await readFile(valid));
   const fake = join(directory, 'fake.jpg'); await writeFile(fake, 'MZ not an image');
   await expect(validateImage(fake)).rejects.toMatchObject({ code: 'INVALID_FILE' });
   await expect(validateImage('relative.png')).rejects.toMatchObject({ code: 'INVALID_FILE' });
